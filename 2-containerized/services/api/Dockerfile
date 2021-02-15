@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:7.10.1
+FROM 923654168085.dkr.ecr.us-east-1.amazonaws.com/alpine:latest
 
 WORKDIR /srv
 ADD . .
