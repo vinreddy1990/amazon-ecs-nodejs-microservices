@@ -11,7 +11,7 @@ provider:
 functions:
   getFXPrice:
     handler: src/getFXPrice/getFXPrice.handler
-    role: arn:aws:iam::ACCOUNT_ID:role/Role_Name
+    role: arn:aws:iam::ACCOUNT_ID:role/fyniti-backend-services-lambda
     environment:
       UIAPP_PRIVATE_ES_URL: UIAPP_PRIVATE_ES_URL
       UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION: UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION
@@ -28,7 +28,7 @@ functions:
 
   updateFXPrice:
     handler: src/updateFXPrice/updateFXPrice.handler
-    role: arn:aws:iam::ACCOUNT_ID:role/Role_Name
+    role: arn:aws:iam::ACCOUNT_ID:role/fyniti-backend-services-lambda
     environment:
       FOREX_API_URL_PREFIX: FOREX_API_URL_PREFIX
       FOREX_API_URL_ACCESS_KEY: FOREX_API_URL_ACCESS_KEY
@@ -48,7 +48,7 @@ functions:
 
   updateFXTechnicalIndicator:
     handler: src/updateFXTechnicalIndicator/updateFXTechnicalIndicator.handler
-    role: arn:aws:iam::ACCOUNT_ID:role/Role_Name
+    role: arn:aws:iam::ACCOUNT_ID:role/fyniti-backend-services-lambda
     environment:
       FOREX_API_URL_PREFIX: FOREX_API_URL_PREFIX
       FOREX_API_URL_ACCESS_KEY: FOREX_API_URL_ACCESS_KEY
