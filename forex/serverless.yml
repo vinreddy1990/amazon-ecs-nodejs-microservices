@@ -6,6 +6,8 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   individually: true
+  httpApi:
+    id: 4e7mp3lhl9
 
 
 functions:
@@ -25,6 +27,10 @@ functions:
         - node_modules/**
         - package.json
         - src/getFXPrice/getFXPrice.js
+    events:
+        - httpApi:
+            method: GET
+            path: /url-path/{param}
 
   updateFXPrice:
     handler: src/updateFXPrice/updateFXPrice.handler
