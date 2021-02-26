@@ -1,0 +1,67 @@
+
+service: forex-lambda
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-1
+  individually: true
+
+
+functions:
+  getFXPrice:
+    handler: src/getFXPrice/getFXPrice.handler
+    role: arn:aws:iam::328974080695:role/fyniti-backend-services-lambda
+    environment:
+      UIAPP_PRIVATE_ES_URL: UIAPP_PRIVATE_ES_URL
+      UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION: UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION
+      UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN: UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN
+    memorySize: 256
+    timeout: 900
+    package:
+      exclude:
+        - src/**
+      include:
+        - node_modules/**
+        - package.json
+        - src/getFXPrice/getFXPrice.js
+
+  updateFXPrice:
+    handler: src/updateFXPrice/updateFXPrice.handler
+    role: arn:aws:iam::328974080695:role/fyniti-backend-services-lambda
+    environment:
+      FOREX_API_URL_PREFIX: FOREX_API_URL_PREFIX
+      FOREX_API_URL_ACCESS_KEY: FOREX_API_URL_ACCESS_KEY
+      UIAPP_PRIVATE_ES_URL: UIAPP_PRIVATE_ES_URL
+      UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION: UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION
+      UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION: UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION
+      UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN: UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN
+    memorySize: 256
+    timeout: 900
+    package:
+      exclude:
+        - src/**
+      include:
+        - node_modules/**
+        - package.json
+        - src/updateFXPrice/updateFXPrice.js
+
+  updateFXTechnicalIndicator:
+    handler: src/updateFXTechnicalIndicator/updateFXTechnicalIndicator.handler
+    role: arn:aws:iam::328974080695:role/fyniti-backend-services-lambda
+    environment:
+      FOREX_API_URL_PREFIX: FOREX_API_URL_PREFIX
+      FOREX_API_URL_ACCESS_KEY: FOREX_API_URL_ACCESS_KEY
+      UIAPP_PRIVATE_ES_URL: UIAPP_PRIVATE_ES_URL
+      UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION: UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION
+      UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION: UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION
+      UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN: UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN
+    memorySize: 256
+    timeout: 900
+    package:
+      exclude:
+        - src/**
+      include:
+        - node_modules/**
+        - package.json
+        - src/updateFXTechnicalIndicator/updateFXTechnicalIndicator.js

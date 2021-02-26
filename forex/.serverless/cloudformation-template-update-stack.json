@@ -1,0 +1,220 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ServerlessDeploymentBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "ServerlessDeploymentBucket"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "GetFXPriceLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/forex-lambda-dev-getFXPrice"
+      }
+    },
+    "UpdateFXPriceLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/forex-lambda-dev-updateFXPrice"
+      }
+    },
+    "UpdateFXTechnicalIndicatorLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/forex-lambda-dev-updateFXTechnicalIndicator"
+      }
+    },
+    "GetFXPriceLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/forex-lambda/dev/1586774586472-2020-04-13T10:43:06.472Z/forex-lambda.zip"
+        },
+        "FunctionName": "forex-lambda-dev-getFXPrice",
+        "Handler": "src/getFXPrice/getFXPrice.handler",
+        "MemorySize": 256,
+        "Role": "arn:aws:iam::328974080695:role/fyniti-backend-services-lambda",
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+        "Environment": {
+          "Variables": {
+            "UIAPP_PRIVATE_ES_URL": "UIAPP_PRIVATE_ES_URL",
+            "UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION": "UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION",
+            "UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN": "UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN"
+          }
+        }
+      },
+      "DependsOn": [
+        "GetFXPriceLogGroup"
+      ]
+    },
+    "GetFXPriceLambdaVersionh5FzeoLTxLakwUfpJxgRnkPNhjv6SgmLir0cVYruccc": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetFXPriceLambdaFunction"
+        },
+        "CodeSha256": "z7VItiiRXloe9ZEol/3TXAIAw7j3btNFaDCH0q6KGc4="
+      }
+    },
+    "UpdateFXPriceLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/forex-lambda/dev/1586774586472-2020-04-13T10:43:06.472Z/forex-lambda.zip"
+        },
+        "FunctionName": "forex-lambda-dev-updateFXPrice",
+        "Handler": "src/updateFXPrice/updateFXPrice.handler",
+        "MemorySize": 256,
+        "Role": "arn:aws:iam::328974080695:role/fyniti-backend-services-lambda",
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+        "Environment": {
+          "Variables": {
+            "FOREX_API_URL_PREFIX": "FOREX_API_URL_PREFIX",
+            "FOREX_API_URL_ACCESS_KEY": "FOREX_API_URL_ACCESS_KEY",
+            "UIAPP_PRIVATE_ES_URL": "UIAPP_PRIVATE_ES_URL",
+            "UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION": "UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION",
+            "UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION": "UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION",
+            "UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN": "UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN"
+          }
+        }
+      },
+      "DependsOn": [
+        "UpdateFXPriceLogGroup"
+      ]
+    },
+    "UpdateFXPriceLambdaVersiontqOhplCjLL46TMK78YbUBTZPhWCgDtm0V3sf78RiI": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "UpdateFXPriceLambdaFunction"
+        },
+        "CodeSha256": "z7VItiiRXloe9ZEol/3TXAIAw7j3btNFaDCH0q6KGc4="
+      }
+    },
+    "UpdateFXTechnicalIndicatorLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/forex-lambda/dev/1586774586472-2020-04-13T10:43:06.472Z/forex-lambda.zip"
+        },
+        "FunctionName": "forex-lambda-dev-updateFXTechnicalIndicator",
+        "Handler": "src/updateFXTechnicalIndicator/updateFXTechnicalIndicator.handler",
+        "MemorySize": 256,
+        "Role": "arn:aws:iam::328974080695:role/fyniti-backend-services-lambda",
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+        "Environment": {
+          "Variables": {
+            "FOREX_API_URL_PREFIX": "FOREX_API_URL_PREFIX",
+            "FOREX_API_URL_ACCESS_KEY": "FOREX_API_URL_ACCESS_KEY",
+            "UIAPP_PRIVATE_ES_URL": "UIAPP_PRIVATE_ES_URL",
+            "UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION": "UIAPP_PRIVATE_ES_CURRENCIES_COLLECTION",
+            "UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION": "UIAPP_PRIVATE_ES_EXCHANGE_PRICE_COLLECTION",
+            "UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN": "UIAPP_PRIVATE_ES_AUTHORIZATION_TOKEN"
+          }
+        }
+      },
+      "DependsOn": [
+        "UpdateFXTechnicalIndicatorLogGroup"
+      ]
+    },
+    "UpdateFXTechnicalIndicatorLambdaVersionqEQfN6NwU6FMjVTeLkfgCWQa4kp3Vaaa5wBdV7Mg84o": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "UpdateFXTechnicalIndicatorLambdaFunction"
+        },
+        "CodeSha256": "z7VItiiRXloe9ZEol/3TXAIAw7j3btNFaDCH0q6KGc4="
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      }
+    },
+    "GetFXPriceLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetFXPriceLambdaVersionh5FzeoLTxLakwUfpJxgRnkPNhjv6SgmLir0cVYruccc"
+      }
+    },
+    "UpdateFXPriceLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "UpdateFXPriceLambdaVersiontqOhplCjLL46TMK78YbUBTZPhWCgDtm0V3sf78RiI"
+      }
+    },
+    "UpdateFXTechnicalIndicatorLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "UpdateFXTechnicalIndicatorLambdaVersionqEQfN6NwU6FMjVTeLkfgCWQa4kp3Vaaa5wBdV7Mg84o"
+      }
+    }
+  }
+}
