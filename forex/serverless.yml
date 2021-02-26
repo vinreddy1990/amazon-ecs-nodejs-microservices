@@ -30,7 +30,7 @@ functions:
     events:
         - httpApi:
             method: GET
-            path: /url-path/{param}
+            path: /test
 
   updateFXPrice:
     handler: src/updateFXPrice/updateFXPrice.handler
