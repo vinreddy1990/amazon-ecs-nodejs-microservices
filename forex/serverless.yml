@@ -32,13 +32,13 @@ functions:
         - src/getFXPrice/getFXPrice.js
     events:
         - http: # this is an API Gateway HTTP event trigger
-           path: /getFXPrice
-           method: post
-           integration: lambda
-           cors: true
-           description: Description of what the lambda function does # optional, Description to publish to AWS
-           memorySize: 512 # optional, in MB, default is 1024
-           timeout: 10
+            path: /getFXPrice
+            method: post
+            integration: lambda
+            cors: true
+            description: Description of what the lambda function does # optional, Description to publish to AWS
+            memorySize: 512 # optional, in MB, default is 1024
+            timeout: 10
 
   updateFXPrice:
     handler: src/updateFXPrice/updateFXPrice.handler
