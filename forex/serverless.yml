@@ -32,7 +32,7 @@ functions:
         - src/getFXPrice/getFXPrice.js
     events:
         - http:
-              path: /{proxy+}
+              path: /api/getFXPrice
               method: ANY
               integration: http-proxy
               connectionType: vpc-link
