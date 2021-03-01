@@ -59,6 +59,15 @@ functions:
         - node_modules/**
         - package.json
         - src/updateFXPrice/updateFXPrice.js
+    events:
+        - http: # this is an API Gateway HTTP event trigger
+            path: /test/updateFXPrice
+            method: post
+            integration: lambda
+            cors: true
+            description: Description of what the lambda function does # optional, Description to publish to AWS
+            memorySize: 512 # optional, in MB, default is 1024
+            timeout: 10
 
   updateFXTechnicalIndicator:
     handler: src/updateFXTechnicalIndicator/updateFXTechnicalIndicator.handler
@@ -79,3 +88,12 @@ functions:
         - node_modules/**
         - package.json
         - src/updateFXTechnicalIndicator/updateFXTechnicalIndicator.js
+    events:
+        - http: # this is an API Gateway HTTP event trigger
+            path: /test/updateFXTechnicalIndicator
+            method: post
+            integration: lambda
+            cors: true
+            description: Description of what the lambda function does # optional, Description to publish to AWS
+            memorySize: 512 # optional, in MB, default is 1024
+            timeout: 10
