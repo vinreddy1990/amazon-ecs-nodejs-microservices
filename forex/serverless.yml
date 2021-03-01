@@ -31,18 +31,14 @@ functions:
         - package.json
         - src/getFXPrice/getFXPrice.js
     events:
-        - http:
-              path: /getFXPrice
-              method: ANY
-              integration: http-proxy
-              connectionType: vpc-link
-              connectionId: 'cz8isq'
-              cors: true
-              request:
-                uri: http://devtest.fyniti.io/api/getFXPrice
-                parameters:
-                  paths:
-                    proxy: true
+        - http: # this is an API Gateway HTTP event trigger
+           path: /getFXPrice
+           method: post
+           integration: lambda
+           cors: true
+           description: Description of what the lambda function does # optional, Description to publish to AWS
+           memorySize: 512 # optional, in MB, default is 1024
+           timeout: 10
 
   updateFXPrice:
     handler: src/updateFXPrice/updateFXPrice.handler
