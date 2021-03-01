@@ -32,7 +32,7 @@ functions:
         - src/getFXPrice/getFXPrice.js
     events:
         - http: # this is an API Gateway HTTP event trigger
-            path: /getFXPrice
+            path: /api/getFXPrice
             method: post
             integration: lambda
             cors: true
