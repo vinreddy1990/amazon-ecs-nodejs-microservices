@@ -1,8 +1,8 @@
 {
   "dependencies": {
     "koa": "^1.2.5",
-    "koa-router": "^5.4.0"
-    "aws-xray-sdk": "1.1.2"
+    "koa-router": "^5.4.0",
+    "aws-xray-sdk": "^1.1.2"
   },
   "scripts": {
     "start": "node server.js"
